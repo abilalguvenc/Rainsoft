@@ -292,8 +292,8 @@ p { font-size: 1.125rem; color: var(--text-muted); }
 }
 
 .partner-logo img {
-    max-height: 100%;
-    max-width: 300px;
+    max-height: calc(100% * var(--logo-scale, 1));
+    max-width: calc(300px * var(--logo-scale, 1));
     object-fit: contain;
 }
 
@@ -306,7 +306,7 @@ p { font-size: 1.125rem; color: var(--text-muted); }
         height: 200px;
     }
     .partner-logo img {
-        max-width: 500px;
+        max-width: calc(500px * var(--logo-scale, 1));
     }
 }
 
