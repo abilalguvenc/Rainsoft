@@ -1,17 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Sticky Navbar
+    // Sticky Navbar & Hide on Scroll logic
     const navbar = document.getElementById('navbar');
+    let lastScrollY = window.scrollY;
+
     window.addEventListener('scroll', () => {
+        // Toggle 'scrolled' class based on distance from top
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
+
+        // Hide/Show navbar based on scroll direction
+        if (window.scrollY > lastScrollY && window.scrollY > 150) {
+            // Scrolling down and past certain threshold
+            navbar.classList.add('nav-hidden');
+        } else {
+            // Scrolling up
+            navbar.classList.remove('nav-hidden');
+        }
+
+        lastScrollY = window.scrollY;
     });
 
     // Scroll Animations (Intersection Observer)
     const fadeElements = document.querySelectorAll('.fade-up');
-    
+
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -67,20 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const animate = () => {
             if (!isPaused) {
                 scrollPos -= speed;
-                
+
                 const firstItem = track.firstElementChild;
                 if (firstItem) {
                     const style = window.getComputedStyle(track);
                     const gap = parseFloat(style.gap) || 0;
                     const itemWidth = firstItem.offsetWidth;
-                    
+
                     // Procedural move: when an item is fully off-screen, move it to the end
                     if (Math.abs(scrollPos) >= itemWidth + gap) {
                         scrollPos += (itemWidth + gap);
                         track.appendChild(firstItem);
                     }
                 }
-                
+
                 track.style.transform = `translateX(${scrollPos}px)`;
             }
             requestAnimationFrame(animate);
