@@ -32,6 +32,63 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
+    // Procedural Marquee logic
+    const track = document.getElementById('marquee-track');
+    if (track) {
+        const container = track.parentElement;
+        let scrollPos = 0;
+        const speed = 1.2; // Pixels per frame
+        let isPaused = false;
+
+        // Clone items procedurally to fill the screen width + buffer
+        const initMarquee = () => {
+            const containerWidth = container.offsetWidth;
+            if (containerWidth === 0) return;
+
+            // We need enough items to fill the screen at least twice to ensure 
+            // there's always an item to show while one is being re-queued.
+            while (track.scrollWidth > 0 && track.scrollWidth < containerWidth * 2.5) {
+                const currentItems = Array.from(track.children);
+                currentItems.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    track.appendChild(clone);
+                });
+            }
+        };
+
+        initMarquee();
+        // Re-run on resize and load to ensure continuity
+        window.addEventListener('resize', initMarquee);
+        window.addEventListener('load', initMarquee);
+
+        track.addEventListener('mouseenter', () => isPaused = true);
+        track.addEventListener('mouseleave', () => isPaused = false);
+
+        const animate = () => {
+            if (!isPaused) {
+                scrollPos -= speed;
+                
+                const firstItem = track.firstElementChild;
+                if (firstItem) {
+                    const style = window.getComputedStyle(track);
+                    const gap = parseFloat(style.gap) || 0;
+                    const itemWidth = firstItem.offsetWidth;
+                    
+                    // Procedural move: when an item is fully off-screen, move it to the end
+                    if (Math.abs(scrollPos) >= itemWidth + gap) {
+                        scrollPos += (itemWidth + gap);
+                        track.appendChild(firstItem);
+                    }
+                }
+                
+                track.style.transform = `translateX(${scrollPos}px)`;
+            }
+            requestAnimationFrame(animate);
+        };
+
+        animate();
+    }
+
     // Form submission prevent default
     const form = document.querySelector('.contact-form');
     if (form) {
