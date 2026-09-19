@@ -145,28 +145,62 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ---------- Contact form ---------- */
-    // Static host, no backend: hand off to the visitor's mail client with the
-    // address they typed already in the body, so the lead actually reaches us.
+    // GitHub Pages has no backend, so submissions go through Web3Forms, which
+    // emails them to info@rainsoft.uk. The access key is public by design.
+    const WEB3FORMS_KEY = '66a453aa-6575-436d-b660-925ac7c898a7';
     const form = document.getElementById('contact-form');
     if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const input = form.querySelector('input[type="email"]');
-            const btn = form.querySelector('button');
-            const email = input.value.trim();
-            if (!email) return;
+        const messageField = form.querySelector('#contact-message');
+        const chips = form.querySelectorAll('.topic-chip');
 
-            const subject = encodeURIComponent('Co-development enquiry');
-            const body = encodeURIComponent(
-                `Hi Rainsoft,\n\nI'd like to talk about a project.\n\nYou can reach me at: ${email}\n\n`
-            );
-            window.location.href = `mailto:info@rainsoft.uk?subject=${subject}&body=${body}`;
+        chips.forEach((chip) => {
+            chip.addEventListener('click', () => {
+                chips.forEach((c) => c.classList.toggle('active', c === chip));
+                messageField.value = chip.dataset.message;
+                messageField.focus();
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button[type="submit"]');
+            const name = form.querySelector('#contact-name').value.trim();
+            const email = form.querySelector('#contact-email').value.trim();
+            const message = messageField.value.trim();
+            if (!name || !email || !message) return;
+            const topic = form.querySelector('.topic-chip.active')?.textContent || 'General';
 
             const originalText = btn.textContent;
-            btn.textContent = 'Opening your email app…';
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                    body: JSON.stringify({
+                        access_key: WEB3FORMS_KEY,
+                        subject: `New ${topic} enquiry from ${name}`,
+                        from_name: 'Rainsoft Website',
+                        name,
+                        email,
+                        replyto: email,
+                        topic,
+                        message,
+                    }),
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message);
+                btn.textContent = 'Thanks! We’ll be in touch.';
+                form.reset();
+                chips.forEach((c) => c.classList.remove('active'));
+            } catch (err) {
+                btn.textContent = 'Something went wrong. Please email us.';
+            }
+
             setTimeout(() => {
                 btn.textContent = originalText;
-                form.reset();
+                btn.disabled = false;
             }, 4000);
         });
     }

@@ -261,11 +261,24 @@
                 <p>Reach out to discuss your co-development or consultancy needs, or email us directly at <a
                         href="mailto:info@rainsoft.uk" class="highlight">info@rainsoft.uk</a></p>
                 <form class="contact-form" id="contact-form">
-                    <label class="visually-hidden" for="contact-email">Your work email</label>
-                    <input id="contact-email" name="email" type="email" placeholder="Your Work Email" required>
+                    <div class="form-row">
+                        <label class="visually-hidden" for="contact-name">Your name</label>
+                        <input id="contact-name" name="name" type="text" placeholder="Your Name" autocomplete="name" required>
+                        <label class="visually-hidden" for="contact-email">Your work email</label>
+                        <input id="contact-email" name="email" type="email" placeholder="Your Work Email" autocomplete="email" required>
+                    </div>
+                    <div class="quick-topics" role="group" aria-label="Quick message topics">
+                        <button type="button" class="topic-chip" data-message="Hi Rainsoft, we're looking for a co-development partner to help scale production on our project. We'd love to discuss how your team could integrate with ours.">Co-Development</button>
+                        <button type="button" class="topic-chip" data-message="Hi Rainsoft, we need help with performance optimization (CPU/GPU, memory, load times) on our game. Could we set up a call to go over our current bottlenecks?">Optimization</button>
+                        <button type="button" class="topic-chip" data-message="Hi Rainsoft, we're working in Unreal Engine and need support with engine integration, custom tools or UI. We'd like to discuss what that could look like.">Unreal Engine</button>
+                        <button type="button" class="topic-chip" data-message="Hi Rainsoft, we're looking for technical consultancy on our project's architecture and technical direction. Could we schedule a chat?">Consultancy</button>
+                        <button type="button" class="topic-chip" data-message="Hi Rainsoft, we'd like help porting our game to additional platforms. Could we discuss scope and timelines?">Porting</button>
+                    </div>
+                    <label class="visually-hidden" for="contact-message">Your message</label>
+                    <textarea id="contact-message" name="message" rows="5" placeholder="Tell us about your project, or pick a topic above" required></textarea>
                     <button type="submit" class="btn-primary">Connect With Us</button>
                 </form>
-                <p class="form-note">Opens your email app with a message ready to send to info@rainsoft.uk.</p>
+                <p class="form-note">Leave your email and we&rsquo;ll get back to you shortly.</p>
             </div>
         </section>
     </main>
