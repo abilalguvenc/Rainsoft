@@ -6,21 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rainsoft | Game Co-Dev Experts</title>
     <meta name="description"
-        content="Rainsoft specializes in game co-development, Unreal Engine expertise, and team acceleration for industry-leading studios.">
+        content="Rainsoft is a UK game co-development studio and a credited developer of Moon Veil. Unreal Engine engineering and team acceleration for industry-leading studios.">
+    <meta name="theme-color" content="#080A0E">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rainsoft.uk/">
+    <meta property="og:title" content="Rainsoft | Game Co-Dev Experts">
+    <meta property="og:description"
+        content="A UK game co-development studio and a credited developer of Moon Veil. Deep Unreal Engine expertise.">
+    <meta property="og:image" content="https://rainsoft.uk/assets/images/moonveil/keyart.webp">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 </head>
 
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <nav id="navbar" class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">
-                <img src="assets/images/rainsoft_logo.svg" alt="Rainsoft" class="logo-img">
+            <a href="#home" class="logo" aria-label="Rainsoft — home">
+                <img src="assets/images/rainsoft_logo_light.svg" alt="Rainsoft" class="logo-img">
             </a>
-            <ul class="nav-links">
+
+            <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links"
+                aria-label="Open menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#moon-veil">Moon Veil</a></li>
                 <li><a href="#process">Process</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#partners">Partners</a></li>
@@ -29,175 +51,248 @@
         </div>
     </nav>
 
-    <header class="hero" id="home">
-        <div class="hero-overlay"></div>
-        <img class="hero-bg" src="assets/hero_bg.webp" alt="Background graphic representing game engine technology"
-            onerror="this.style.display='none'">
-        <div class="hero-content">
-            <h1 class="fade-up">Your Expert Game <span class="gradient-text">Co-Development</span> Partner</h1>
-            <p class="fade-up delay-1">Integrating seamlessly with your studio to accelerate production. Specializing
-                in Unreal Engine engineering and fully scalable co-development.</p>
-            <div class="hero-actions fade-up delay-2">
-                <a href="#services" class="btn-primary">Our Expertise</a>
-                <a href="#contact" class="btn-secondary">Let's Talk</a>
-            </div>
-        </div>
-    </header>
-
-    <section class="partners-section" id="partners">
-        <div class="container">
-            <p class="section-subtitle center fade-up">Trusted by Industry Leaders</p>
-        </div>
-        <div class="marquee-container fade-up delay-1">
-            <div class="marquee-track" id="marquee-track">
-                <a href="https://505games.com/" target="_blank" rel="noopener noreferrer" class="partner-logo"
-                    style="--logo-scale: 0.5;">
-                    <img src="assets/images/505games_logo.svg" alt="505 Games">
+    <main id="main">
+        <header class="hero" id="home">
+            <div class="hero-ambient" aria-hidden="true"></div>
+            <div class="hero-grid" aria-hidden="true"></div>
+            <div class="hero-content">
+                <a href="#moon-veil" class="hero-badge fade-up">
+                    <span class="hero-badge-dot" aria-hidden="true"></span>
+                    In development &mdash; <strong>Moon Veil</strong>
+                    <span class="hero-badge-arrow" aria-hidden="true">&rarr;</span>
                 </a>
-                <a href="https://companiongroup.io/" target="_blank" rel="noopener noreferrer" class="partner-logo">
-                    <img src="assets/images/companiongroup_logo.svg" alt="Companion Group">
-                </a>
-                <a href="https://www.drstudios.co.uk/" target="_blank" rel="noopener noreferrer" class="partner-logo"
-                    style="--logo-scale: 0.7;">
-                    <img src="assets/images/drstudios_logo.svg" alt="DR Studios">
-                </a>
-                <a href="https://www.pertevforge.com/" target="_blank" rel="noopener noreferrer" class="partner-logo"
-                    style="--logo-scale: 0.9;">
-                    <img src="assets/images/pertevforge_logo.svg" alt="Pertevforge">
-                </a>
-                <a href="https://store.steampowered.com/curator/45782856-GrindGames/" target="_blank"
-                    rel="noopener noreferrer" class="partner-logo">
-                    <img src="assets/images/grindgames_logo.svg" alt="GrindGames">
-                </a>
-            </div>
-        </div>
-        </div>
-    </section>
-
-    <section class="process-section" id="process">
-        <div class="container">
-            <div class="section-header fade-up">
-                <h2>The <span class="highlight">Co-Dev</span> Workflow</h2>
-                <p>How we seamlessly bridge the gap between your vision and production.</p>
-            </div>
-
-            <div class="process-grid">
-                <div class="process-step fade-up">
-                    <div class="step-number">01</div>
-                    <h3>Analyze & Sync</h3>
-                    <p>We deep-dive into your existing systems and workflows to ensure a perfect technical and cultural
-                        fit.</p>
-                </div>
-                <div class="process-step fade-up delay-1">
-                    <div class="step-number">02</div>
-                    <h3>Seamless Integration</h3>
-                    <p>Our engineers join your version control, Slack, and Jira, becoming an extension of your primary
-                        team.</p>
-                </div>
-                <div class="process-step fade-up delay-2">
-                    <div class="step-number">03</div>
-                    <h3>Milestone Delivery</h3>
-                    <p>We work in your sprints, handling complex sub-systems while your team focuses on the big picture.
-                    </p>
+                <h1 class="fade-up delay-1">Your Expert Game <span class="gradient-text">Co-Development</span> Partner
+                </h1>
+                <p class="fade-up delay-2">Integrating seamlessly with your studio to accelerate production.
+                    Specializing in Unreal Engine engineering and fully scalable co-development.</p>
+                <div class="hero-actions fade-up delay-3">
+                    <a href="#moon-veil" class="btn-primary">See Our Work</a>
+                    <a href="#contact" class="btn-secondary">Let&rsquo;s Talk</a>
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="container">
-        <div class="section-header fade-up">
-            <h2>Our <span class="highlight">Co-Development</span> Expertise</h2>
-            <p>Seamlessly integrating with your team to scale production and solve complex technical challenges.</p>
-        </div>
+            <a href="#partners" class="hero-scroll" aria-label="Scroll to partners">
+                <span class="hero-scroll-line" aria-hidden="true"></span>
+            </a>
+        </header>
 
-        <div class="services-grid">
-            <div class="service-card fade-up">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#3994DB" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M2 17L12 22L22 17" stroke="#3994DB" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M2 12L12 17L22 12" stroke="#3994DB" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </div>
-                <h3>Full-Cycle Co-Development</h3>
-                <p>Working alongside your internal teams to scale production. From core systems to final polish, we
-                    co-develop with you to hit your milestones on time.</p>
+        <section class="partners-section" id="partners">
+            <div class="container">
+                <p class="section-subtitle center fade-up">Trusted by Industry Leaders</p>
             </div>
-
-            <div class="service-card fade-up delay-1">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M21 16V8C20.9996 7.64927 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64927 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z"
-                            stroke="#3994DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 22V12" stroke="#3994DB" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M12 12L20.5 7" stroke="#3994DB" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M12 12L3.5 7" stroke="#3994DB" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
+            <div class="marquee-container fade-up delay-1">
+                <div class="marquee-track" id="marquee-track">
+                    <a href="https://505games.com/" target="_blank" rel="noopener noreferrer" class="partner-logo"
+                        style="--logo-scale: 0.5;">
+                        <img src="assets/images/505games_logo.svg" alt="505 Games" loading="lazy">
+                    </a>
+                    <a href="https://companiongroup.io/" target="_blank" rel="noopener noreferrer" class="partner-logo">
+                        <img src="assets/images/companiongroup_logo.svg" alt="Companion Group" loading="lazy">
+                    </a>
+                    <a href="https://www.drstudios.co.uk/" target="_blank" rel="noopener noreferrer"
+                        class="partner-logo" style="--logo-scale: 0.7;">
+                        <img src="assets/images/drstudios_logo.svg" alt="DR Studios" loading="lazy">
+                    </a>
+                    <a href="https://www.pertevforge.com/" target="_blank" rel="noopener noreferrer"
+                        class="partner-logo" style="--logo-scale: 0.9;">
+                        <img src="assets/images/pertevforge_logo.svg" alt="Pertevforge" loading="lazy">
+                    </a>
+                    <a href="https://store.steampowered.com/curator/45782856-GrindGames/" target="_blank"
+                        rel="noopener noreferrer" class="partner-logo">
+                        <img src="assets/images/grindgames_logo.svg" alt="GrindGames" loading="lazy">
+                    </a>
                 </div>
-                <h3>Unreal Engine Integration</h3>
-                <p>We don't just write code; we integrate into your pipeline. From custom engine tools to performant UI,
-                    we provide the Unreal Engine expertise to co-develop at scale.</p>
             </div>
+        </section>
 
-            <div class="service-card fade-up delay-2">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
-                            stroke="#3994DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
-                            stroke="#3994DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
-                            stroke="#3994DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
-                            stroke="#3994DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+        <!-- ============ Moon Veil ============ -->
+        <section class="game-section" id="moon-veil" aria-labelledby="moon-veil-title">
+            <div class="game-bg" aria-hidden="true"></div>
+            <div class="game-veil" aria-hidden="true"></div>
+
+            <div class="container game-inner">
+                <div class="game-head">
+                    <p class="section-subtitle fade-up">A Rainsoft Co-Production Title</p>
+
+                    <div class="game-keyart fade-up">
+                        <img src="assets/images/moonveil/keyart.webp" width="460" height="215"
+                            alt="Moon Veil key art: a werewolf stalking a moonlit western town" loading="lazy">
+                    </div>
+
+                    <h2 id="moon-veil-title" class="visually-hidden">Moon Veil</h2>
+
+                    <p class="game-tagline fade-up delay-1">A tense co-op PvP social deduction game for 3&ndash;12
+                        players. Loot by day, survive the night, uncover the werewolves &mdash; or become one.</p>
+
+                    <ul class="game-meta fade-up delay-2">
+                        <li class="meta-key"><span>Developers</span><strong>GrindGames, Rainsoft Ltd</strong></li>
+                        <li><span>Engine</span><strong>Unreal Engine</strong></li>
+                        <li><span>Platform</span><strong>PC &mdash; Steam</strong></li>
+                        <li><span>Release</span><strong>Soon</strong></li>
+                    </ul>
+
+                    <div class="game-actions fade-up delay-2">
+                        <a href="https://store.steampowered.com/app/4042470/Moon_Veil/" target="_blank"
+                            rel="noopener noreferrer" class="btn-primary">
+                            <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+                                aria-hidden="true">
+                                <path
+                                    d="M11.98 2C6.44 2 1.9 6.23 1.4 11.62l5.72 2.37a3.4 3.4 0 0 1 1.9-.6l2.55-3.7v-.05a4.53 4.53 0 1 1 4.53 4.54h-.1l-3.64 2.6c0 .08.01.16.01.24a3.4 3.4 0 0 1-6.75.55L1.4 15.9A10 10 0 1 0 11.98 2Zm-4.7 15.15 1.31.54a2.57 2.57 0 1 0 1.43-3.36l1.36.56a1.9 1.9 0 1 1-1.45 3.5l-2.65-1.24Zm11.83-6.9a3.02 3.02 0 1 0-6.04 0 3.02 3.02 0 0 0 6.04 0Zm-5.28 0a2.27 2.27 0 1 1 4.53 0 2.27 2.27 0 0 1-4.53 0Z" />
+                            </svg>
+                            View on Steam
+                        </a>
+                        <a href="https://store.steampowered.com/app/4042470/Moon_Veil/" target="_blank"
+                            rel="noopener noreferrer" class="btn-secondary">Wishlist</a>
+                    </div>
+
                 </div>
-                <h3>Technical Consultancy</h3>
-                <p>Solving the toughest technical problems. We provide architectural oversight and high-level technical
-                    direction to secure your project's architecture.</p>
             </div>
-        </div>
-    </div>
-    </section>
+        </section>
 
-    <section class="cta-section fade-up" id="contact">
-        <div class="cta-card">
-            <h2>Ready to Level Up Your Project?</h2>
-            <p>Reach out to discuss your consultancy or training needs, or email us at <a href="mailto:info@rainsoft.uk"
-                    class="highlight">info@rainsoft.uk</a></p>
-            <form class="contact-form">
-                <input type="email" placeholder="Your Work Email" required>
-                <button type="submit" class="btn-primary">Connect With Us</button>
-            </form>
-        </div>
-    </section>
+        <section class="process-section" id="process">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>The <span class="highlight">Co-Dev</span> Workflow</h2>
+                    <p>How we seamlessly bridge the gap between your vision and production.</p>
+                </div>
+
+                <div class="process-grid">
+                    <div class="process-step fade-up">
+                        <div class="step-number">01</div>
+                        <h3>Analyze &amp; Sync</h3>
+                        <p>We deep-dive into your existing systems and workflows to ensure a perfect technical and
+                            cultural fit.</p>
+                    </div>
+                    <div class="process-step fade-up delay-1">
+                        <div class="step-number">02</div>
+                        <h3>Seamless Integration</h3>
+                        <p>Our engineers join your version control, Slack, and Jira, becoming an extension of your
+                            primary team.</p>
+                    </div>
+                    <div class="process-step fade-up delay-2">
+                        <div class="step-number">03</div>
+                        <h3>Milestone Delivery</h3>
+                        <p>We work in your sprints, handling complex sub-systems while your team focuses on the big
+                            picture.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services-section" id="services">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>Our <span class="highlight">Co-Development</span> Expertise</h2>
+                    <p>Seamlessly integrating with your team to scale production and solve complex technical
+                        challenges.</p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card fade-up">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Full-Cycle Co-Development</h3>
+                        <p>Working alongside your internal teams to scale production. From core systems to final polish,
+                            we co-develop with you to hit your milestones on time.</p>
+                    </div>
+
+                    <div class="service-card fade-up delay-1">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path
+                                    d="M21 16V8C20.9996 7.64927 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64927 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 12L20.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 12L3.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Unreal Engine Integration</h3>
+                        <p>We don&rsquo;t just write code; we integrate into your pipeline. From custom engine tools to
+                            performant UI, we provide the Unreal Engine expertise to co-develop at scale.</p>
+                    </div>
+
+                    <div class="service-card fade-up delay-2">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path
+                                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Technical Consultancy</h3>
+                        <p>Solving the toughest technical problems. We provide architectural oversight and high-level
+                            technical direction to secure your project&rsquo;s architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section fade-up" id="contact">
+            <div class="cta-card">
+                <h2>Ready to Level Up Your Project?</h2>
+                <p>Reach out to discuss your co-development or consultancy needs, or email us directly at <a
+                        href="mailto:info@rainsoft.uk" class="highlight">info@rainsoft.uk</a></p>
+                <form class="contact-form" id="contact-form">
+                    <label class="visually-hidden" for="contact-email">Your work email</label>
+                    <input id="contact-email" name="email" type="email" placeholder="Your Work Email" required>
+                    <button type="submit" class="btn-primary">Connect With Us</button>
+                </form>
+                <p class="form-note">Opens your email app with a message ready to send to info@rainsoft.uk.</p>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <a href="#" class="logo">
-                        <img src="assets/images/rainsoft_logo.svg" alt="Rainsoft Logo" class="logo-img">
+                    <a href="#home" class="logo" aria-label="Rainsoft — home">
+                        <img src="assets/images/rainsoft_logo_light.svg" alt="Rainsoft" class="logo-img">
                     </a>
-                    <p class="footer-desc">Professional Game Co-Development & Engineering Consultancy</p>
+                    <p class="footer-desc">Professional Game Co-Development &amp; Engineering Consultancy</p>
                     <p class="footer-contact"><a href="mailto:info@rainsoft.uk">info@rainsoft.uk</a></p>
                 </div>
                 <div class="footer-social-col">
                     <div class="footer-social">
+                        <a href="https://store.steampowered.com/app/4042470/Moon_Veil/" target="_blank"
+                            rel="noopener noreferrer" aria-label="Moon Veil on Steam">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M11.98 2C6.44 2 1.9 6.23 1.4 11.62l5.72 2.37a3.4 3.4 0 0 1 1.9-.6l2.55-3.7v-.05a4.53 4.53 0 1 1 4.53 4.54h-.1l-3.64 2.6c0 .08.01.16.01.24a3.4 3.4 0 0 1-6.75.55L1.4 15.9A10 10 0 1 0 11.98 2Zm-4.7 15.15 1.31.54a2.57 2.57 0 1 0 1.43-3.36l1.36.56a1.9 1.9 0 1 1-1.45 3.5l-2.65-1.24Zm11.83-6.9a3.02 3.02 0 1 0-6.04 0 3.02 3.02 0 0 0 6.04 0Zm-5.28 0a2.27 2.27 0 1 1 4.53 0 2.27 2.27 0 0 1-4.53 0Z" />
+                            </svg>
+                        </a>
                         <a href="https://www.linkedin.com/company/rainsoftuk" target="_blank" rel="noopener noreferrer"
                             aria-label="LinkedIn">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path
                                     d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z"
                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"

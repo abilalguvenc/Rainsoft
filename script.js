@@ -1,83 +1,124 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Sticky Navbar
-    // Sticky Navbar & Hide on Scroll logic
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- Sticky navbar, hide on scroll down ---------- */
     const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
     let lastScrollY = window.scrollY;
 
-    window.addEventListener('scroll', () => {
-        // Toggle 'scrolled' class based on distance from top
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+    const closeMenu = () => {
+        navLinks.classList.remove('open');
+        navbar.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open menu');
+    };
 
-        // Hide/Show navbar based on scroll direction
-        if (window.scrollY > lastScrollY && window.scrollY > 150) {
-            // Scrolling down and past certain threshold
-            navbar.classList.add('nav-hidden');
-        } else {
-            // Scrolling up
-            navbar.classList.remove('nav-hidden');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+        // Don't slide the bar away while the mobile menu is open.
+        if (!navLinks.classList.contains('open')) {
+            const scrollingDown = window.scrollY > lastScrollY && window.scrollY > 150;
+            navbar.classList.toggle('nav-hidden', scrollingDown);
         }
 
         lastScrollY = window.scrollY;
+    }, { passive: true });
+
+    /* ---------- Mobile menu ---------- */
+    navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navbar.classList.toggle('nav-open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     });
 
-    // Scroll Animations (Intersection Observer)
+    navLinks.addEventListener('click', (e) => {
+        if (e.target.closest('a')) closeMenu();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+            closeMenu();
+            navToggle.focus();
+        }
+    });
+
+    /* ---------- Scroll animations ---------- */
     const fadeElements = document.querySelectorAll('.fade-up');
 
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    };
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+        // No observer (or the visitor asked for less motion): just show everything.
+        fadeElements.forEach((el) => el.classList.add('visible'));
+    } else {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Optional: stop observing once animated
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+        fadeElements.forEach((el) => observer.observe(el));
+    }
 
-    fadeElements.forEach(element => {
-        observer.observe(element);
+    /* ---------- Active nav link ---------- */
+    const sections = Array.from(document.querySelectorAll('main section[id], main header[id]'));
+    const linkFor = new Map();
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach((a) => {
+        linkFor.set(a.getAttribute('href').slice(1), a);
     });
 
-    // Procedural Marquee logic
+    if ('IntersectionObserver' in window && sections.length) {
+        const spy = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const link = linkFor.get(entry.target.id);
+                if (link) link.classList.toggle('active', entry.isIntersecting);
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+
+        sections.forEach((s) => spy.observe(s));
+    }
+
+    /* ---------- Partner marquee ---------- */
     const track = document.getElementById('marquee-track');
-    if (track) {
+    if (track && !reduceMotion) {
         const container = track.parentElement;
+        const originals = Array.from(track.children);
+        const speed = 1.2; // pixels per frame
         let scrollPos = 0;
-        const speed = 1.2; // Pixels per frame
         let isPaused = false;
 
-        // Clone items procedurally to fill the screen width + buffer
+        // Clone the strip until it comfortably overfills the viewport, so there is
+        // always another logo queued as one rotates off the left edge.
         const initMarquee = () => {
             const containerWidth = container.offsetWidth;
-            if (containerWidth === 0) return;
+            if (!containerWidth || !track.scrollWidth) return;
 
-            // We need enough items to fill the screen at least twice to ensure 
-            // there's always an item to show while one is being re-queued.
-            while (track.scrollWidth > 0 && track.scrollWidth < containerWidth * 2.5) {
-                const currentItems = Array.from(track.children);
-                currentItems.forEach(item => {
-                    const clone = item.cloneNode(true);
-                    track.appendChild(clone);
-                });
+            // Hard cap: originals.length * 12 keeps a pathological resize loop bounded.
+            const maxChildren = originals.length * 12;
+            while (track.scrollWidth < containerWidth * 2.5 && track.children.length < maxChildren) {
+                const before = track.children.length;
+                originals.forEach((item) => track.appendChild(item.cloneNode(true)));
+                if (track.children.length === before) break; // nothing was added; bail out
             }
         };
 
         initMarquee();
-        // Re-run on resize and load to ensure continuity
-        window.addEventListener('resize', initMarquee);
         window.addEventListener('load', initMarquee);
 
-        track.addEventListener('mouseenter', () => isPaused = true);
-        track.addEventListener('mouseleave', () => isPaused = false);
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(initMarquee, 200);
+        });
+
+        track.addEventListener('mouseenter', () => { isPaused = true; });
+        track.addEventListener('mouseleave', () => { isPaused = false; });
+        track.addEventListener('focusin', () => { isPaused = true; });
+        track.addEventListener('focusout', () => { isPaused = false; });
 
         const animate = () => {
             if (!isPaused) {
@@ -85,13 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const firstItem = track.firstElementChild;
                 if (firstItem) {
-                    const style = window.getComputedStyle(track);
-                    const gap = parseFloat(style.gap) || 0;
+                    const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
                     const itemWidth = firstItem.offsetWidth;
 
-                    // Procedural move: when an item is fully off-screen, move it to the end
-                    if (Math.abs(scrollPos) >= itemWidth + gap) {
-                        scrollPos += (itemWidth + gap);
+                    // Once an item is fully off-screen, requeue it at the end.
+                    if (itemWidth && Math.abs(scrollPos) >= itemWidth + gap) {
+                        scrollPos += itemWidth + gap;
                         track.appendChild(firstItem);
                     }
                 }
@@ -104,20 +144,30 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
     }
 
-    // Form submission prevent default
-    const form = document.querySelector('.contact-form');
+    /* ---------- Contact form ---------- */
+    // Static host, no backend: hand off to the visitor's mail client with the
+    // address they typed already in the body, so the lead actually reaches us.
+    const form = document.getElementById('contact-form');
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            const input = form.querySelector('input[type="email"]');
             const btn = form.querySelector('button');
+            const email = input.value.trim();
+            if (!email) return;
+
+            const subject = encodeURIComponent('Co-development enquiry');
+            const body = encodeURIComponent(
+                `Hi Rainsoft,\n\nI'd like to talk about a project.\n\nYou can reach me at: ${email}\n\n`
+            );
+            window.location.href = `mailto:info@rainsoft.uk?subject=${subject}&body=${body}`;
+
             const originalText = btn.textContent;
-            btn.textContent = 'Message Sent!';
-            btn.style.backgroundColor = '#2cba6c'; // success green
+            btn.textContent = 'Opening your email app…';
             setTimeout(() => {
                 btn.textContent = originalText;
-                btn.style.backgroundColor = '';
                 form.reset();
-            }, 3000);
+            }, 4000);
         });
     }
 });
