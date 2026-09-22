@@ -152,13 +152,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
         const messageField = form.querySelector('#contact-message');
         const chips = form.querySelectorAll('.topic-chip');
+        const otherChip = form.querySelector('.topic-chip[data-other]');
+        const selectChip = (chip) => chips.forEach((c) => c.classList.toggle('active', c === chip));
 
         chips.forEach((chip) => {
             chip.addEventListener('click', () => {
-                chips.forEach((c) => c.classList.toggle('active', c === chip));
+                selectChip(chip);
                 messageField.value = chip.dataset.message;
                 messageField.focus();
+                // Park the caret at the end so "Other" can be finished straight away.
+                const end = messageField.value.length;
+                messageField.setSelectionRange(end, end);
             });
+        });
+
+        // Free typing counts as "Other"; clearing the message drops the topic.
+        messageField.addEventListener('input', () => {
+            if (!messageField.value.trim()) {
+                selectChip(null);
+            } else if (!form.querySelector('.topic-chip.active')) {
+                selectChip(otherChip);
+            }
         });
 
         form.addEventListener('submit', async (e) => {
@@ -193,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!data.success) throw new Error(data.message);
                 btn.textContent = 'Thanks! We’ll be in touch.';
                 form.reset();
-                chips.forEach((c) => c.classList.remove('active'));
+                selectChip(null);
             } catch (err) {
                 btn.textContent = 'Something went wrong. Please email us.';
             }
